@@ -1,0 +1,34 @@
+Objective: Fix Bugs in DnD Puzzle Piece Game
+
+    Bugs: 
+
+        Bug #1 - 
+            More than one puzzle piece can be 
+            dragged and dropped into a single drop zone,
+            when there should only be ONE in the same drop zone at a time.
+
+        Bug #2 -
+            When the game is reset, the puzzle pieces do not reset to their
+            original position. They also remain in their slots even if the
+            puzzle is changed. Pressing reset, or changing the puzzle should
+            remove / reparent the pieces to the drag zone, so that the player 
+            can have a fresh board to drag the pieces onto. 
+
+    Exploring Solutions: 
+
+        Bug #1 -
+        Starting with what we do know, the issue occurs when the puzzle piece is
+        dropped, which means it occurs during 
+        "function handleDrop(e) { 
+        e.preventDefault();
+        console.log('dropped something on me');" 
+
+        However, there is nothing wrong with the drop function itself, the code is 
+        doing as we're telling it to do. The issue is, it doesn't know when NOT to
+        it!
+
+        This means we have to set a condition, aka, an 'if' statement. "If there is 
+        a piece in drop-zone ##, return piece to drag zone (puzzle pieces div)." 
+
+
+
