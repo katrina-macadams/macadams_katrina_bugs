@@ -25,10 +25,36 @@ Objective: Fix Bugs in DnD Puzzle Piece Game
 
         However, there is nothing wrong with the drop function itself, the code is 
         doing as we're telling it to do. The issue is, it doesn't know when NOT to
-        it!
+        do it!
 
         This means we have to set a condition, aka, an 'if' statement. "If there is 
-        a piece in drop-zone ##, return piece to drag zone (puzzle pieces div)." 
+        a piece in drop-zone ##, another piece can't be added." 
+
+        But to prevent the piece from being added to a filled slot, we have to tell
+        it what it should do instead. I inquired with ChatGBT and watched a YouTube
+        tutorial on exit functions and how to write one. I will use that to tell
+        the piece to go back using a 'return' statement. 
+
+        To target the thing we want, we also need to define what is being returned.
+        In this case, the drop zone acts as our parent in the HTML, and the puzzle piece
+        is our child. By using FirstElementChild and the return, we can communicate
+        our 'if' statment further, by letting it know what to do if the slot is empty,
+        and what not to do when it is. 
+
+        In the YouTube tutorial I watched, it was explained that if you don't put in a 
+        value, or there is nothing to initiate a value, JS will, by default, call it 
+        undefined.
+
+        We're essentially telling JS using our 'if' statement to check whether or not 
+        our value is undefined or not. 
+        
+        IF it's defined, our drop zone is empty, so the function will carry out as
+        planned. 
+        
+        However, if JS finds a value other than undefined, it means there's 
+        already a piece in that slot, so JS will use the return to exit the 
+        function early. 
+
 
 
 
