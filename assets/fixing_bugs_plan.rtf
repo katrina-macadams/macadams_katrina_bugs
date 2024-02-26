@@ -10,7 +10,7 @@ Objective: Fix Bugs in DnD Puzzle Piece Game
         Bug #2 -
             When the game is reset, the puzzle pieces do not reset to their
             original position. They also remain in their slots even if the
-            puzzle is changed. Pressing reset, or changing the puzzle should
+            puzzle is changed. Pressing reset, or changing the puzzle SHOULD
             remove / reparent the pieces to the drag zone, so that the player 
             can have a fresh board to drag the pieces onto. 
 
@@ -23,37 +23,62 @@ Objective: Fix Bugs in DnD Puzzle Piece Game
         e.preventDefault();
         console.log('dropped something on me');" 
 
-        However, there is nothing wrong with the drop function itself, the code is 
-        doing as we're telling it to do. The issue is, it doesn't know when NOT to
-        do it!
-
-        This means we have to set a condition, aka, an 'if' statement. "If there is 
+        We have to set a condition, aka, an 'if' statement. "If there is 
         a piece in drop-zone ##, another piece can't be added." 
 
-        But to prevent the piece from being added to a filled slot, we have to tell
-        it what it should do instead. I inquired with ChatGBT and watched a YouTube
-        tutorial on exit functions and how to write one. I will use that to tell
-        the piece to go back using a 'return' statement. 
+        To prevent the piece from being added to a filled slot, we have to tell
+        it what it should do instead. I reviewed my notes, inquired with ChatGBT 
+        and watched a YouTube tutorial on exit functions and how to write one. 
+        I will use that to tell the piece to go back using a 'return' statement. 
 
         To target the thing we want, we also need to define what is being returned.
-        In this case, the drop zone acts as our parent in the HTML, and the puzzle piece
-        is our child. By using FirstElementChild and the return, we can communicate
+        By using FirstElementChild and the return, we can communicate
         our 'if' statment further, by letting it know what to do if the slot is empty,
         and what not to do when it is. 
 
-        In the YouTube tutorial I watched, it was explained that if you don't put in a 
-        value, or there is nothing to initiate a value, JS will, by default, call it 
-        undefined.
-
         We're essentially telling JS using our 'if' statement to check whether or not 
-        our value is undefined or not. 
+        our value is undefined or not.
         
-        IF it's defined, our drop zone is empty, so the function will carry out as
+        IF it's undefined, our drop zone is empty, so the function will carry out as
         planned. 
         
         However, if JS finds a value other than undefined, it means there's 
         already a piece in that slot, so JS will use the return to exit the 
-        function early. 
+        function early. Fixing our first bug!
+
+        ---
+        
+        Bug #2 - 
+
+        The second bug is located in the line of code that involves our 
+        'changeBGImage'. 
+
+        Similar to Bug #1, we want JS to evaluate our 'if' statement; "IF there
+        are pieces left in the boards drop zones, put them back." We want this 
+        condition to run when the user clicks a new puzzle theme.
+
+        Since one of the primary functions of the puzzle is it's ability to change
+        it's theme, we should expect the user will/can utilize this feature multiple
+        times, which means our process will need to be repeated. For this, we can use 
+        a ForEach loop to ensure that every element receives the same set of actions
+        and efficiently streamline the process of repeating the block of code. 
+
+        First, we have to figure out what that block of code will be. As mentioned,
+        we want to return any pieces left in our drop zone, so that's exactly where 
+        JS should be looking when a new background is clicked. 
+
+        To put the puzzle piece back in it's original spot, I considered appending it to
+        the 'puzzlePieces' variable, however, the variable includes an img element. To 
+        counteract this, I'll simply create a new query selector tag called 'puzzleContainer'
+        where it will only target the puzzle piece zone. From there, I'll create another 
+        function called 'resetPieces' where I'll use appendChild to add that piece back to the 
+        puzzle piece container, which it will only do if JS detects a child element in the zone. 
+
+        Having a seperate function means I'll be able to callback to it when needed, and so I'll
+        put the callback under our changeBGImage function so that it runs everytime we change the 
+        background image. Fixing our second bug. 
+
+
 
 
 

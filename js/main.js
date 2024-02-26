@@ -11,6 +11,7 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
 	puzzleBoard = document.querySelector(".puzzle-board"),
 	puzzlePieces = document.querySelectorAll(".puzzle-pieces img"),
 	dropZones = document.querySelectorAll('.drop-zone'),
+	pieceContainer = document.querySelector(".puzzle-pieces"),
 	// store the dragged piece in a global variable
 	// because we need it in the handleDrop function
 	draggedPiece;
@@ -18,6 +19,15 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
 // step 3
 // functionality always goes in the middle -> how do we want
 // the app to behave?
+
+function resetPieces() {
+	dropZones.forEach (zone => {
+	if (zone.firstElementChild) {
+	pieceContainer.appendChild(zone.firstElementChild);
+	}
+});
+}
+
 function changeBGImage() {
 	// the `` is a JavaScript template string. It tells the JS enging to evaluate the expression
 	// inside the braces - run that little bit of code. In this case it's just pulling the ID of the
@@ -25,6 +35,10 @@ function changeBGImage() {
 	// and updating the background-image style of the puzzle board element.
 
 	// bug fix #2 should go here. it's at most 3 lines of JS code.
+	
+	resetPieces();
+
+	
 	puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
 }
 
